@@ -1,0 +1,119 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum GymAccess {
+  ONE
+  NATIONAL
+  WORLD
+}
+
+model Enterprise {
+  id          Int    @id @default(autoincrement())
+  name        String
+  description String
+  creator     String
+
+  gym Gym[]
+}
+
+model Gym {
+  id           Int      @id @default(autoincrement())
+  name         String
+  location     String
+  itinerary    String?
+  phoneNumber  String?
+  openingHour  String?
+  closingHour  String?
+  creationDate DateTime @default(now())
+  enterpriseId Int
+
+  manager    Manager[]
+  user       User[]
+  stats      Stat[]
+  enterprise Enterprise @relation(fields: [enterpriseId], references: [id])
+}
+
+model Manager {
+  id        Int    @id @default(autoincrement())
+  email     String 
+  password  String
+  firstname String
+  lastname  String
+
+  gymId     Int?
+  gym Gym? @relation(fields: [gymId], references: [id])
+}
+
+model User {
+  id                Int           @id @default(autoincrement())
+  firstname         String
+  lastname          String
+  email             String        @unique
+  password          String
+  phone             String
+  qrCode            String?
+  
+  subscriptionId    Int?
+  subscription      Subscription? @relation(fields: [subscriptionId], references: [id])
+  subscriptionStart DateTime?
+  subscriptionEnd   DateTime?
+
+  stats             Stat[]
+  userBadge         UserBadge[]
+
+  gymId             Int?
+  gym               Gym?          @relation(fields: [gymId], references: [id])
+}
+
+model Subscription {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+  price       Float
+  gymAccess   GymAccess
+  duration    DateTime
+  users       User[]
+}
+
+model Stat {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  gymId     Int
+  entryTime DateTime
+  exitTime  DateTime?
+
+  user User @relation(fields: [userId], references: [id])
+  gym  Gym @relation(fields: [gymId], references: [id])
+
+  @@index([userId])
+  @@index([gymId])
+}
+
+model Badge {
+  id          Int         @id @default(autoincrement())
+  name        String
+  description String
+  iconUrl     String
+  category    String 
+  level       Int
+
+  userBadgeId Int
+  userBadge UserBadge @relation(fields: [userBadgeId], references: [id])
+}
+
+model UserBadge {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  earnedDate DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
+  badge      Badge[]
+}

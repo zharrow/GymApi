@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter une Entreprise</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            width: 300px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, textarea {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Ajouter une Entreprise</h2>
+        <form id="enterpriseForm">
+            <label for="name">Nom :</label>
+            <input type="text" id="name" name="name" required />
+
+            <label for="description">Description :</label>
+            <textarea id="description" name="description" rows="3" required></textarea>
+
+            <label for="creator">Créateur :</label>
+            <input type="text" id="creator" name="creator" required />
+
+            <button type="submit">Ajouter l'entreprise</button>
+        </form>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        document.getElementById("enterpriseForm").addEventListener("submit", async function (event) {
+            event.preventDefault();
+            
+            const name = document.getElementById("name").value;
+            const description = document.getElementById("description").value;
+            const creator = document.getElementById("creator").value;
+
+            const response = await fetch("http://localhost:3000/api/enterprises", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ name, description, creator }),
+            });
+
+            const messageElement = document.getElementById("message");
+            if (response.ok) {
+                messageElement.textContent = "Entreprise ajoutée avec succès!";
+                messageElement.style.color = "green";
+                document.getElementById("enterpriseForm").reset();
+                sleep(200).then(() => {
+                    window.location.href = "http://localhost:3000/enterprises";
+                });
+            } else {
+                messageElement.textContent = "Erreur lors de l'ajout de l'entreprise.";
+                messageElement.style.color = "red";
+            }
+        });
+    </script>
+</body>
+</html>

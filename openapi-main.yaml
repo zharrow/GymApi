@@ -1,0 +1,879 @@
+openapi: 3.0.0
+info:
+  title: Gym Management API
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+paths:
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Retrieve all users
+      operationId: getUsers
+      responses:
+        200:
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        401:
+          description: Unauthorized
+        404:
+          description: Not found
+    post:
+      tags:
+        - Users
+      summary: Register a new user
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        201:
+          description: User created
+  /users/{id}:
+    get:
+      tags:
+        - Users
+      summary: Retrieve a user by ID
+      operationId: getUserById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    put:
+      tags:
+        - Users
+      summary: Update a user
+      operationId: updateUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: User updated
+    delete:
+      tags:
+        - Users
+      summary: Delete a user
+      operationId: deleteUserById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: User deleted
+
+  /badges:
+    get:
+      tags:
+        - Badges
+      summary: Retrieve all badges
+      operationId: getBadges
+      responses:
+        200:
+          description: List of badges
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Badge'
+    post:
+      tags:
+        - Badges
+      summary: Create a new badge
+      operationId: createBadge
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Badge'
+      responses:
+        201:
+          description: Badge created
+  /badges/{id}:
+    get:
+      tags:
+        - Badges
+      summary: Retrieve a badge by ID
+      operationId: getBadgeById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Badge details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Badge'
+    put:
+      tags:
+        - Badges
+      summary: Update a badge
+      operationId: updateBadge
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Badge'
+      responses:
+        200:
+          description: Badge updated
+    delete:
+      tags:
+        - Badges
+      summary: Delete a badge
+      operationId: deleteBadgeById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: Badge deleted
+
+  /enterprises:
+    get:
+      tags:
+        - Enterprises
+      summary: Retrieve all enterprises
+      operationId: getEnterprises
+      responses:
+        200:
+          description: List of enterprises
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Enterprise'
+    post:
+      tags:
+        - Enterprises
+      summary: Create a new enterprise
+      operationId: createEnterprise
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Enterprise'
+      responses:
+        201:
+          description: Enterprise created
+  /enterprises/{id}:
+    get:
+      tags:
+        - Enterprises
+      summary: Retrieve an enterprise by ID
+      operationId: getEnterpriseById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Enterprise details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enterprise'
+    put:
+      tags:
+        - Enterprises
+      summary: Update an enterprise
+      operationId: updateEnterprise
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Enterprise'
+      responses:
+        200:
+          description: Enterprise updated
+    delete:
+      tags:
+        - Enterprises
+      summary: Delete an enterprise
+      operationId: deleteEnterpriseById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: Enterprise deleted
+
+  /gyms:
+    get:
+      tags:
+        - Gyms
+      summary: Retrieve all gyms
+      operationId: getGyms
+      responses:
+        200:
+          description: List of gyms
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Gym'
+    post:
+      tags:
+        - Gyms
+      summary: Create a new gym
+      operationId: createGym
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Gym'
+      responses:
+        201:
+          description: Gym created
+  /gyms/{id}:
+    get:
+      tags:
+        - Gyms
+      summary: Retrieve a gym by ID
+      operationId: getGymById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Gym details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Gym'
+    put:
+      tags:
+        - Gyms
+      summary: Update a gym
+      operationId: updateGym
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Gym'
+      responses:
+        200:
+          description: Gym updated
+    delete:
+      tags:
+        - Gyms
+      summary: Delete a gym
+      operationId: deleteGymById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: Gym deleted
+  /managers:
+    get:
+      tags:
+        - Managers
+      summary: Retrieve all managers
+      operationId: getManagers
+      responses:
+        200:
+          description: List of managers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Manager'
+    post:
+      tags:
+        - Managers
+      summary: Create a new manager
+      operationId: createManager
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Manager'
+      responses:
+        201:
+          description: Manager created
+  /managers/{id}:
+    get:
+      tags:
+        - Managers
+      summary: Retrieve a manager by ID
+      operationId: getManagerById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Manager details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Manager'
+    put:
+      tags:
+        - Managers
+      summary: Update a manager
+      operationId: updateManager
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Manager'
+      responses:
+        200:
+          description: Manager updated
+    delete:
+      tags:
+        - Managers
+      summary: Delete a manager
+      operationId: deleteManagerById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: Manager deleted
+
+  /stats:
+    get:
+      tags:
+        - Stats
+      summary: Retrieve all stats
+      operationId: getStats
+      responses:
+        200:
+          description: List of stats
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Stat'
+    post:
+      tags:
+        - Stats
+      summary: Create a new stat
+      operationId: createStat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Stat'
+      responses:
+        201:
+          description: Stat created
+  /stats/{id}:
+    get:
+      tags:
+        - Stats
+      summary: Retrieve a stat by ID
+      operationId: getStatById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Stat details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stat'
+    put:
+      tags:
+        - Stats
+      summary: Update a stat
+      operationId: updateStat
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Stat'
+      responses:
+        200:
+          description: Stat updated
+    delete:
+      tags:
+        - Stats
+      summary: Delete a stat
+      operationId: deleteStatById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: Stat deleted
+
+  /subscriptions:
+    get:
+      tags:
+        - Subscriptions
+      summary: Retrieve all subscriptions
+      operationId: getSubscriptions
+      responses:
+        200:
+          description: List of subscriptions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subscription'
+    post:
+      tags:
+        - Subscriptions
+      summary: Create a new subscription
+      operationId: createSubscription
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Subscription'
+      responses:
+        201:
+          description: Subscription created
+  /subscriptions/{id}:
+    get:
+      tags:
+        - Subscriptions
+      summary: Retrieve a subscription by ID
+      operationId: getSubscriptionById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Subscription details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+    put:
+      tags:
+        - Subscriptions
+      summary: Update a subscription
+      operationId: updateSubscription
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Subscription'
+      responses:
+        200:
+          description: Subscription updated
+    delete:
+      tags:
+        - Subscriptions
+      summary: Delete a subscription
+      operationId: deleteSubscriptionById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: Subscription deleted
+
+  /userBadges:
+    get:
+      tags:
+        - UserBadges
+      summary: Retrieve all user badges
+      operationId: getUserBadges
+      responses:
+        200:
+          description: List of user badges
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserBadge'
+    post:
+      tags:
+        - UserBadges
+      summary: Create a new user badge
+      operationId: createUserBadge
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserBadge'
+      responses:
+        201:
+          description: UserBadge created
+  /userBadges/{id}:
+    get:
+      tags:
+        - UserBadges
+      summary: Retrieve a user badge by ID
+      operationId: getUserBadgeById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: User badge details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserBadge'
+    put:
+      tags:
+        - UserBadges
+      summary: Update a user badge
+      operationId: updateUserBadge
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserBadge'
+      responses:
+        200:
+          description: UserBadge updated
+    delete:
+      tags:
+        - UserBadges
+      summary: Delete a user badge
+      operationId: deleteUserBadgeById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: UserBadge deleted
+
+
+components:
+  schemas:
+    Badge:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        iconUrl:
+          type: string
+        category:
+          type: string
+        level:
+          type: integer
+
+    Enterprise:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        creator:
+          type: string
+        gymId:
+          type: integer
+          nullable: true
+        gym:
+          $ref: '#/components/schemas/Gym'
+
+    Gym:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        location:
+          type: string
+        itinerary:
+          type: string
+          nullable: true
+        phoneNumber:
+          type: string
+          nullable: true
+        openingHour:
+          type: string
+          nullable: true
+        closingHour:
+          type: string
+          nullable: true
+        creationDate:
+          type: string
+          format: date-time
+        userId:
+          type: integer
+          nullable: true
+        enterprises:
+          type: array
+          items:
+            $ref: '#/components/schemas/Enterprise'
+        managers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Manager'
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        stats:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stat'
+
+    Manager:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+        password:
+          type: string
+        firstname:
+          type: string
+        lastname:
+          type: string
+        gymId:
+          type: integer
+          nullable: true
+        gym:
+          $ref: '#/components/schemas/Gym'
+
+    Stat:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: integer
+        gymId:
+          type: integer
+          nullable: true
+        entryTime:
+          type: string
+          format: date-time
+        exitTime:
+          type: string
+          format: date-time
+          nullable: true
+        user:
+          $ref: '#/components/schemas/User'
+        gym:
+          $ref: '#/components/schemas/Gym'
+
+    Subscription:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+          format: float
+        gymAccess:
+          type: string
+          enum:
+            - ONE
+            - NATIONAL
+            - WORLD
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstname:
+          type: string
+        lastname:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        phone:
+          type: string
+        qrCode:
+          type: string
+          nullable: true
+        subscriptionId:
+          type: integer
+          nullable: true
+        subscriptionStart:
+          type: string
+          format: date-time
+          nullable: true
+        subscriptionEnd:
+          type: string
+          format: date-time
+          nullable: true
+        gymId:
+          type: integer
+          nullable: true
+        subscription:
+          $ref: '#/components/schemas/Subscription'
+        stats:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stat'
+        userBadges:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserBadge'
+        gym:
+          $ref: '#/components/schemas/Gym'
+
+    UserBadge:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: integer
+        badgeId:
+          type: integer
+        earnedDate:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/User'
+        badge:
+          $ref: '#/components/schemas/Badge'
