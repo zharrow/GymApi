@@ -1,87 +1,91 @@
-import { getAll, getById, deleteById, create } from '../services/badge.service.js';
+import { badgeSchema, updateBadgeSchema } from '../validators/badge.validator.js';
+import { getAll, getById, deleteById, create, update } from '../services/badge.service.js';
 
-export const getBadges = async (req, res) => {
-    const data = await getAll(req.query.sortBy, req.query.sortDirection);
-    res.json({
-        success: true,
-        data,
-    });
-}
-
-export const getBadgeById = async (req, res) => {
-    const badge = await getById(parseInt(req.params.id));
-
-    if (!badge) {
-        return res.status(404).json({
-            success: false,
-            message: 'Badge not found',
-        });
-    }
-
-    return res.json({
-        success: true,
-        data: badge,
-    });
-}
-
-export const deleteBadgeById = async (req, res) => {
-    const badgeId = parseInt(req.params.id);
-
-    const badge = await getById(badgeId);
-    if (!badge) {
-        return res.status(404).json({
-            success: false,
-            message: 'Badge not found',
-        });
-    }
-
-    const hasBeenDeleted = await deleteById(badgeId);
-    if (!hasBeenDeleted) {
-        return res.status(500).json({
-            success: false,
-            message: 'Failed to delete the badge',
-        });
-    }
-    return res.json({
-        success: true,
-        message: `Badge with the id ${badgeId} deleted from the database`,
-    });
-}
-
-export const createBadge = async (req, res) => {
-    const { name, description, iconUrl, category, level } = req.body;
-    let badge;
+export const getBadges = async (req, res, next) => {
     try {
-        badge = await create(name, description, iconUrl, category, level);
+        const data = await getAll(req.query.sortBy, req.query.sortDirection);
+        res.json({ success: true, data });
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: error.message,
-        });
+        next(error);
     }
-    return res.json({
-        success: true,
-        data: badge,
-    });
-}
+};
 
-export const updateBadge = async (req, res) => {
-    const badgeId = parseInt(req.params.id);
-    const { name, description, image } = req.body;
-
-    const badge = await getById(badgeId);
-    if (!badge) {
-        return res.status(404).json({
-            success: false,
-            message: 'Badge not found',
-        });
+export const getBadgeById = async (req, res, next) => {
+    try {
+        const badge = await getById(parseInt(req.params.id));
+        if (!badge) {
+            const error = new Error('Badge not found');
+            error.status = 404;
+            throw error;
+        }
+        res.json({ success: true, data: badge });
+    } catch (error) {
+        next(error);
     }
+};
 
-    const updatedBadge = await create(name, description, image);
-    return res.json({
-        success: true,
-        data: updatedBadge,
-    });
-}
+export const createBadge = async (req, res, next) => {
+    try {
+        const { error } = badgeSchema.validate(req.body);
+        if (error) {
+            error.status = 400;
+            throw error;
+        }
 
+        const { name, description, iconUrl, category, level } = req.body;
+        const badge = await create(name, description, iconUrl, category, level);
+        res.json({
+            success: true,
+            message: `Badge ${name} created`,
+            data: badge,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
 
+export const updateBadge = async (req, res, next) => {
+    try {
+        const { error } = updateBadgeSchema.validate(req.body);
+        if (error) {
+            error.status = 400;
+            throw error;
+        }
+
+        const { name, description, iconUrl, category, level } = req.body;
+        const { id } = req.params;
+        const badge = await update(id, name, description, iconUrl, category, level);
+        res.json({ success: true, data: badge });
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const deleteBadgeById = async (req, res, next) => {
+    try {
+        const badgeId = parseInt(req.params.id);
+        const badge = await getById(badgeId);
+
+        if (!badge) {
+            const error = new Error('Badge not found');
+            error.status = 404;
+            throw error;
+        }
+
+        const name = badge.name;
+        const hasBeenDeleted = await deleteById(badgeId);
+
+        if (!hasBeenDeleted) {
+            const error = new Error('Failed to delete the badge');
+            error.status = 500;
+            throw error;
+        }
+
+        res.json({
+            success: true,
+            message: `Badge ${name} deleted`,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
