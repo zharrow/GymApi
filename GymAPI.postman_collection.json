@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "5f5fa80e-e480-4c59-bcbc-b32279a92eef",
-		"name": "my-api",
+		"name": "GymAPI",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "39189052"
 	},
@@ -10,8 +10,18 @@
 			"name": "Enterprise",
 			"item": [
 				{
-					"name": "All Enterprises",
+					"name": "All Enterprises ✅",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM2NDQ2MzM4LCJleHAiOjE3MzY0NDk5Mzh9.KbdLQp9JSr9ZQfuAlMH6mvspWetGhwr5ehDAxiQfV2c",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -27,8 +37,55 @@
 					"response": []
 				},
 				{
+					"name": "All Enterprise with Pagination include ✅",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM2NDQ2MzM4LCJleHAiOjE3MzY0NDk5Mzh9.KbdLQp9JSr9ZQfuAlMH6mvspWetGhwr5ehDAxiQfV2c",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/enterprises?page=1&pageSize=10",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"enterprises"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create Enterprise ✅",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM2NDQyMDMzLCJleHAiOjE3MzY0NDU2MzN9.sLzlJMItrExrc12m6-a8ETHaAJsIm2CJE0DLe6RIH6U",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -77,6 +134,16 @@
 				{
 					"name": "Enterprise by Id ✅",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM2NDQyMDMzLCJleHAiOjE3MzY0NDU2MzN9.sLzlJMItrExrc12m6-a8ETHaAJsIm2CJE0DLe6RIH6U",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -95,6 +162,16 @@
 				{
 					"name": "Update Enterprise ✅",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM2NDQyMDMzLCJleHAiOjE3MzY0NDU2MzN9.sLzlJMItrExrc12m6-a8ETHaAJsIm2CJE0DLe6RIH6U",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -138,19 +215,155 @@
 					"response": []
 				},
 				{
-					"name": "Add Gym to Enterprise",
+					"name": "Add Gym to Enterprise ✅",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM2NDQ3MDg5LCJleHAiOjE3MzY0NTA2ODl9.EnqM44JQ3Pv5f68MehmmN4RRHxNmYJKv4vLMOUL5hDM",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"gymId\": 1,\r\n    \"enterpriseId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{api}}/enterprises/add-gym/",
+							"raw": "{{api}}/enterprises/add-gym",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"enterprises",
-								"add-gym",
-								""
+								"add-gym"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Turnover",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM2NDQ3MDg5LCJleHAiOjE3MzY0NTA2ODl9.EnqM44JQ3Pv5f68MehmmN4RRHxNmYJKv4vLMOUL5hDM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/enterprises/1/turnover",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"enterprises",
+								"1",
+								"turnover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Global Stats",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM2NDQ2MzM4LCJleHAiOjE3MzY0NDk5Mzh9.KbdLQp9JSr9ZQfuAlMH6mvspWetGhwr5ehDAxiQfV2c",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/enterprises/global-stats",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"enterprises",
+								"global-stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Stat Attendance Gym ✅",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM2NDQ3MDg5LCJleHAiOjE3MzY0NTA2ODl9.EnqM44JQ3Pv5f68MehmmN4RRHxNmYJKv4vLMOUL5hDM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/enterprises/1/attendance",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"enterprises",
+								"1",
+								"attendance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Toggle Enterprise Status ✅",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM2NDQ3MDg5LCJleHAiOjE3MzY0NTA2ODl9.EnqM44JQ3Pv5f68MehmmN4RRHxNmYJKv4vLMOUL5hDM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/enterprises/1/status",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"enterprises",
+								"1",
+								"status"
 							]
 						}
 					},
@@ -165,6 +378,16 @@
 				{
 					"name": "All Gyms ✅",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzM2MTU3MTc2LCJleHAiOjE3MzYxNjA3NzZ9.KRKnP83Fg54b1A52QEjHwl_eSs_VvGQRCIoJjGMFb0Y",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -182,11 +405,21 @@
 				{
 					"name": "Create Gym ✅",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM2NDQyMDMzLCJleHAiOjE3MzY0NDU2MzN9.sLzlJMItrExrc12m6-a8ETHaAJsIm2CJE0DLe6RIH6U",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"Basic Fit Labège\",\r\n  \"location\": \"Labège\",\r\n  \"phoneNumber\": \"+33534567890\",\r\n  \"openingHour\": \"06:00\",\r\n  \"closingHour\": \"22:00\"\r\n}",
+							"raw": "{\r\n  \"name\": \"Basic Fit Labège\",\r\n  \"location\": \"Labège\",\r\n  \"phoneNumber\": \"0753456780\",\r\n  \"openingHour\": \"06:00\",\r\n  \"closingHour\": \"22:00\",\r\n  \"enterpriseId\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -224,7 +457,7 @@
 					"response": []
 				},
 				{
-					"name": "Update Gym",
+					"name": "Update Gym ✅",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -271,7 +504,17 @@
 				{
 					"name": "Add Manager to Gym",
 					"request": {
-						"method": "GET",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM2NDQ3MDg5LCJleHAiOjE3MzY0NTA2ODl9.EnqM44JQ3Pv5f68MehmmN4RRHxNmYJKv4vLMOUL5hDM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
 						"header": [],
 						"url": {
 							"raw": "{{api}}/gym/add-manager/",
@@ -355,7 +598,7 @@
 					"response": []
 				},
 				{
-					"name": "Update Manager",
+					"name": "Update Manager ✅",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -432,7 +675,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzMzODY0MjE1LCJleHAiOjE3MzM4Njc4MTV9.g5JJGxy_uMl-sNRiOMzwNKYuiBga8D1Q07MzhCC51L8",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzM2NDM0OTE0LCJleHAiOjE3MzY0Mzg1MTR9.WdERwHQYwCF4QugodhkyPIX7rs10P4ItR81_OrzYQiY",
 									"type": "string"
 								}
 							]
@@ -458,7 +701,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"firstname\": \"Florent\",\r\n  \"lastname\": \"Detres\",\r\n  \"email\": \"florent47@protonmail.com\",\r\n  \"password\": \"azerty\",\r\n  \"phone\": \"0784858695\",\r\n  \"qrCode\": \"\",\r\n  \"gymId\": 1\r\n}\r\n",
+							"raw": "{\r\n  \"firstname\": \"Florent\",\r\n  \"lastname\": \"Detres\",\r\n  \"email\": \"florent.detres1@protonmail.com\",\r\n  \"password\": \"Azer!y1995\",\r\n  \"phone\": \"0784858695\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -494,22 +737,35 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"exec": [],
-								"type": "text/javascript"
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzM0Nzg1MTc5LCJleHAiOjE3MzQ3ODg3Nzl9.-lfqkvkejx6KLeWzSOuWcwWOr8AQHr_Aip1z4HzREJc",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{api}}/users/1",
+							"raw": "{{api}}/users/2",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"users",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -573,16 +829,26 @@
 				{
 					"name": "Delete User ✅",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzM0Nzg1MTc5LCJleHAiOjE3MzQ3ODg3Nzl9.-lfqkvkejx6KLeWzSOuWcwWOr8AQHr_Aip1z4HzREJc",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{api}}/users/1",
+							"raw": "{{api}}/users/3",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"users",
-								"1"
+								"3"
 							]
 						}
 					},
@@ -598,7 +864,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"florent47@protonmail.com\",\r\n    \"password\": \"azerty\"\r\n}",
+							"raw": "{\r\n    \"email\": \"florent.detres1@protonmail.com\",\r\n    \"password\": \"Azer!y1995\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -619,13 +885,23 @@
 					"response": []
 				},
 				{
-					"name": "Attribute Subscription",
+					"name": "Attribute Subscription ✅",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM2NDM1OTkyLCJleHAiOjE3MzY0Mzk1OTJ9.lm0ZwBFA_-sTsoVh0NAycou8RjXxcuNJmu5kIvtS6Qg",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"subscriptionId\": 1\r\n}",
+							"raw": "{\r\n    \"userId\": 1,\r\n    \"subscriptionId\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -633,33 +909,26 @@
 							}
 						},
 						"url": {
-							"raw": "{{api}}/users/:userId/subscriptions",
+							"raw": "{{api}}/users/assign-subscription",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"users",
-								":userId",
-								"subscriptions"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": ""
-								}
+								"assign-subscription"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Update Subscription",
+					"name": "Update Subscription For User✅",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"subscriptionId\": 2\r\n}",
+							"raw": "{\r\n    \"startDate\": \"2025-01-15T00:00:00Z\",\r\n    \"endDate\": \"2025-06-15T00:00:00Z\",\r\n    \"subscriptionId\": 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -667,45 +936,42 @@
 							}
 						},
 						"url": {
-							"raw": "{{api}}/users/:userId/subscriptions",
+							"raw": "{{api}}/users/subscriptions/1",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"users",
-								":userId",
-								"subscriptions"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": ""
-								}
+								"subscriptions",
+								"1"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Delete Subscription",
+					"name": "Delete Subscription For User ✅",
 					"request": {
 						"method": "DELETE",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": 1,\r\n    \"subscriptionId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{api}}/users/:userId/subscriptions",
+							"raw": "{{api}}/users/subscriptions/1",
 							"host": [
 								"{{api}}"
 							],
 							"path": [
 								"users",
-								":userId",
-								"subscriptions"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": ""
-								}
+								"subscriptions",
+								"1"
 							]
 						}
 					},
@@ -730,6 +996,24 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "SearchBar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/user/search",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"user",
+								"search"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"description": "Methods To Consum User API Database"
@@ -740,6 +1024,16 @@
 				{
 					"name": "List of subscriptions ✅",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM2NDQyMDMzLCJleHAiOjE3MzY0NDU2MzN9.sLzlJMItrExrc12m6-a8ETHaAJsIm2CJE0DLe6RIH6U",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -757,11 +1051,21 @@
 				{
 					"name": "Create Subscription ✅",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM2NDM1OTkyLCJleHAiOjE3MzY0Mzk1OTJ9.lm0ZwBFA_-sTsoVh0NAycou8RjXxcuNJmu5kIvtS6Qg",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"National\",\r\n  \"description\": \"Access to all Spanish gym\",\r\n  \"price\": 29.99,\r\n  \"gymAccess\": \"ALL\"\r\n}",
+							"raw": "{\r\n  \"name\": \"National\",\r\n  \"description\": \"Access to all French gym\",\r\n  \"price\": 29.99,\r\n  \"gymAccess\": \"NATIONAL\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -781,13 +1085,23 @@
 					"response": []
 				},
 				{
-					"name": "Update Subscription",
+					"name": "Update Subscription ✅",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM2NDQyMDMzLCJleHAiOjE3MzY0NDU2MzN9.sLzlJMItrExrc12m6-a8ETHaAJsIm2CJE0DLe6RIH6U",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"World\",\r\n    \"description\": \"Access to all gyms in the World\",\r\n    \"price\": 49.99,\r\n    \"gymAccess\": \"ALL\"\r\n}",
+							"raw": "{\r\n    \"name\": \"World\",\r\n    \"description\": \"Access to all gyms in the World\",\r\n    \"price\": 49.99,\r\n    \"gymAccess\": \"NATIONAL\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -851,6 +1165,16 @@
 				{
 					"name": "List of Stats for all Users ✅",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM2NDQyMDMzLCJleHAiOjE3MzY0NDU2MzN9.sLzlJMItrExrc12m6-a8ETHaAJsIm2CJE0DLe6RIH6U",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -868,11 +1192,21 @@
 				{
 					"name": "Create Stat ✅",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM2NDQyMDMzLCJleHAiOjE3MzY0NDU2MzN9.sLzlJMItrExrc12m6-a8ETHaAJsIm2CJE0DLe6RIH6U",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userId\": 2,\r\n    \"gymId\": 1,\r\n    \"entryTime\": \"2024-12-10T11:28:00.000Z\",\r\n    \"exitTime\": \"2024-12-10T12:47:00.000Z\"\r\n}",
+							"raw": "{\r\n    \"userId\": 1,\r\n    \"gymId\": 1,\r\n    \"entryTime\": \"2024-02-14T11:28:00.000Z\",\r\n    \"exitTime\": \"2024-02-14T12:47:00.000Z\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -927,24 +1261,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Delete Stat",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{api}}/stats/1",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"stats",
-								"1"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -954,6 +1270,16 @@
 				{
 					"name": "List of Badges ✅",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM2NDQyMDMzLCJleHAiOjE3MzY0NDU2MzN9.sLzlJMItrExrc12m6-a8ETHaAJsIm2CJE0DLe6RIH6U",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -971,11 +1297,21 @@
 				{
 					"name": "Create Badge ✅",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM2NDQyMDMzLCJleHAiOjE3MzY0NDU2MzN9.sLzlJMItrExrc12m6-a8ETHaAJsIm2CJE0DLe6RIH6U",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"10 Entries\",\r\n  \"description\": \"Awarded for entering a gym for the 10th time\",\r\n  \"iconUrl\": \"https://example.com/icons/first-entry.png\",\r\n  \"category\": \"Entry\",\r\n  \"level\": 2\r\n}",
+							"raw": "{\r\n    \"name\": \"10 Entries\",\r\n    \"description\": \"Awarded for entering a gym 10 times\",\r\n    \"iconUrl\": \"https://example.com/icons/10-entries.png\",\r\n    \"category\": \"Entry\",\r\n    \"level\": 1,\r\n    \"isGlobal\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -989,24 +1325,6 @@
 							],
 							"path": [
 								"badges"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Details of Badge",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{api}}/badges/1",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"badges",
-								"1"
 							]
 						}
 					},
@@ -1050,98 +1368,6 @@
 								"{{api}}"
 							],
 							"path": [
-								"badges",
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "UserBadge",
-			"item": [
-				{
-					"name": "Attribute Badge To User",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"badgeId\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{api}}/users/1/badges",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"users",
-								"1",
-								"badges"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "List of Badges for 1 User",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{api}}/users/1/badges",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"users",
-								"1",
-								"badges"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Detail for Badge attributed for 1 User",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{api}}/users/1/badges/1",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"users",
-								"1",
-								"badges",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Badge attributed at User",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{api}}/users/1/badges/1",
-							"host": [
-								"{{api}}"
-							],
-							"path": [
-								"users",
-								"1",
 								"badges",
 								"1"
 							]
