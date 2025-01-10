@@ -8,6 +8,13 @@ const router = express.Router();
 router.post('/auth/register', UserController.register);
 router.post('/auth/login', UserController.loginUser);
 
+// router.post('/auth/forgot-password', UserController.forgotPassword);
+// router.post('/auth/reset-password', UserController.resetPassword);
+
+router.post('/users/assign-subscription', UserController.assignSubscription);
+router.put('/users/subscriptions/:userSubscriptionId', UserController.updateSubscription);
+router.delete('/users/subscriptions/:userSubscriptionId', UserController.deleteSubscription);
+
 // Protected routes
 router.use(authMiddleware);
 

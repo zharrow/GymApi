@@ -87,3 +87,27 @@ export const deleteById = async (id) => {
     }
     return false;
 }
+
+export const assignBadgeToUser = async (userId, badgeId) => {
+    const user = await prisma.user.findUnique({
+        where: { id: parseInt(userId) },
+    });
+    if (!user) {
+        throw new Error('User not found');
+    }
+
+    const badge = await prisma.badge.findUnique({
+        where: { id: parseInt(badgeId) },
+    });
+    if (!badge) {
+        throw new Error('Badge not found');
+    }
+
+    return await prisma.userBadge.create({
+        data: {
+            userId: parseInt(userId),
+            badgeId: parseInt(badgeId),
+            earnedDate: new Date(),
+        },
+    });
+};

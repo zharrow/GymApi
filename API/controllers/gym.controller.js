@@ -26,17 +26,17 @@ export const getGymById = async (req, res, next) => {
 
 export const createGym = async (req, res, next) => {
     try {
-        const { error } = gymSchema.validate(req.body);
-        if (error) {
+        const { name, location, itinerary, phoneNumber, openingHour, closingHour, enterpriseId } = req.body;
+
+        if (!enterpriseId) {
+            const error = new Error('Enterprise ID is required');
             error.status = 400;
             throw error;
         }
 
-        const { name, location, itinerary, phoneNumber, openingHour, closingHour, creationDate } = req.body;
-        const gym = await create(name, location, itinerary, phoneNumber, openingHour, closingHour, creationDate);
+        const gym = await create(name, location, itinerary, phoneNumber, openingHour, closingHour, enterpriseId);
         res.json({
             success: true,
-            message: `Gym ${name} created at ${location}`,
             data: gym,
         });
     } catch (error) {
@@ -93,3 +93,21 @@ export const deleteGymById = async (req, res, next) => {
         next(error);
     }
 };
+
+export const turnover = async (req, res, next) => {
+    try {
+        const gymId = parseInt(req.params.id);
+        const gym = await getById(gymId);
+
+        if (!gym) {
+            const error = new Error('Gym not found');
+            error.status = 404;
+            throw error;
+        }
+
+        const turnover = await calculateTurnover(gymId);
+        res.json({ success: true, data: turnover });
+    } catch (error) {
+        next(error);
+    }
+}

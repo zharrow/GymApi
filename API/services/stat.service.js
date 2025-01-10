@@ -1,4 +1,5 @@
 import prisma from '../../db.js';
+import { assignBadgeToUser } from './badge.service.js';
 
 export const getAll = async (sortBy, sortDirection) => {
     let options = {
@@ -88,3 +89,22 @@ export const deleteById = async (id) => {
         where: { id: parseInt(id) },
     });
 }
+
+export const checkAndAssignBadge = async (userId, badgeCriteria) => {
+    const stats = await prisma.stat.count({
+        where: {
+            userId: parseInt(userId),
+            ...badgeCriteria,
+        },
+    });
+
+    if (stats >= 10) {
+        const badge = await prisma.badge.findFirst({
+            where: { name: "10 Entries" },
+        });
+        if (badge) {
+            return await assignBadgeToUser(userId, badge.id);
+        }
+    }
+    return null;
+};

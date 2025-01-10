@@ -1,4 +1,5 @@
 import { getAll, getById, deleteById, create, update, updatePassword, login } from '../services/user.service.js';
+import { assignSubscriptionToUser, updateSubscriptionForUser, deleteSubscriptionForUser } from '../services/subscription.service.js';
 import { userSchema, updateUserSchema, loginSchema } from '../validators/user.validator.js';
 
 
@@ -115,6 +116,67 @@ export const updatePwd = async (req, res, next) => {
         const { password } = req.body;
         const user = await updatePassword(id, password);
         res.json({ success: true, data: user });
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const assignSubscription = async (req, res, next) => {
+    try {
+        const { userId, subscriptionId } = req.body;
+        if (!userId || !subscriptionId) {
+            const error = new Error('userId and subscriptionId are required');
+            error.status = 400;
+            throw error;
+        }
+
+        const result = await assignSubscriptionToUser(userId, subscriptionId);
+        res.json({
+            success: true,
+            message: `Subscription ${subscriptionId} assigned to user ${userId}`,
+            data: result,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const updateSubscription = async (req, res, next) => {
+    try {
+        const { userSubscriptionId } = req.params;
+        const updates = req.body;
+        if (!userSubscriptionId || Object.keys(updates).length === 0) {
+            const error = new Error('userSubscriptionId and at least one field to update are required');
+            error.status = 400;
+            throw error;
+        }
+
+        const result = await updateSubscriptionForUser(userSubscriptionId, updates);
+        res.json({
+            success: true,
+            message: `Subscription ${userSubscriptionId} updated successfully`,
+            data: result,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const deleteSubscription = async (req, res, next) => {
+    try {
+        const { userSubscriptionId } = req.params;
+        if (!userSubscriptionId) {
+            const error = new Error('userSubscriptionId is required');
+            error.status = 400;
+            throw error;
+        }
+
+        const result = await deleteSubscriptionForUser(userSubscriptionId);
+        res.json({
+            success: true,
+            message: `Subscription ${userSubscriptionId} deleted successfully`,
+            data: result,
+        });
     } catch (error) {
         next(error);
     }

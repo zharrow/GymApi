@@ -59,10 +59,7 @@ model User {
   phone             String
   qrCode            String?
   
-  subscriptionId    Int?
-  subscription      Subscription? @relation(fields: [subscriptionId], references: [id])
-  subscriptionStart DateTime?
-  subscriptionEnd   DateTime?
+  subscriptions     UserSubscription[]
 
   stats             Stat[]
   userBadge         UserBadge[]
@@ -72,15 +69,14 @@ model User {
 }
 
 model Subscription {
-  id          Int       @id @default(autoincrement())
-  name        String
-  description String
-  price       Float
-  gymAccess   GymAccess
-  duration    DateTime
-  users       User[]
+  id            Int                @id @default(autoincrement())
+  name          String
+  description   String?
+  price         Float
+  duration      Int?
+  gymAccess     GymAccess
+  users         UserSubscription[]
 }
-
 model Stat {
   id        Int       @id @default(autoincrement())
   userId    Int
@@ -96,15 +92,15 @@ model Stat {
 }
 
 model Badge {
-  id          Int         @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
   description String
   iconUrl     String
-  category    String 
+  category    String
   level       Int
+  isGlobal    Boolean  @default(true)
 
-  userBadgeId Int
-  userBadge UserBadge @relation(fields: [userBadgeId], references: [id])
+  userBadge   UserBadge[]
 }
 
 model UserBadge {
@@ -113,4 +109,15 @@ model UserBadge {
   earnedDate DateTime @default(now())
   user       User     @relation(fields: [userId], references: [id])
   badge      Badge[]
+}
+
+model UserSubscription {
+  id             Int       @id @default(autoincrement())
+  userId         Int
+  subscriptionId Int
+  startDate      DateTime
+  endDate        DateTime?
+
+  user           User       @relation(fields: [userId], references: [id])
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id])
 }

@@ -1,5 +1,5 @@
 import { badgeSchema, updateBadgeSchema } from '../validators/badge.validator.js';
-import { getAll, getById, deleteById, create, update } from '../services/badge.service.js';
+import { getAll, getById, deleteById, create, update, assignBadgeToUser } from '../services/badge.service.js';
 
 export const getBadges = async (req, res, next) => {
     try {
@@ -84,6 +84,27 @@ export const deleteBadgeById = async (req, res, next) => {
         res.json({
             success: true,
             message: `Badge ${name} deleted`,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const assignBadge = async (req, res, next) => {
+    try {
+        const { userId, badgeId } = req.body;
+
+        if (!userId || !badgeId) {
+            const error = new Error('userId and badgeId are required');
+            error.status = 400;
+            throw error;
+        }
+
+        const result = await assignBadgeToUser(userId, badgeId);
+        res.json({
+            success: true,
+            message: `Badge ${badgeId} assigned to user ${userId}`,
+            data: result,
         });
     } catch (error) {
         next(error);
