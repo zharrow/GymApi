@@ -52,7 +52,7 @@ export const getById = async (id) => {
             name: true,
             description: true,
             price: true,
-            gymAccess: true,
+            gymAccess: true.toUpperCase(),
         },
     });
 }
@@ -68,3 +68,64 @@ export const getByUserId = async (userId) => {
         where: { userId: parseInt(userId) },
     });
 }
+
+export const assignSubscriptionToUser = async (userId, subscriptionId) => {
+    const user = await prisma.user.findUnique({
+        where: { id: parseInt(userId) },
+    });
+    if (!user) {
+        throw new Error('User not found');
+    }
+
+    const subscription = await prisma.subscription.findUnique({
+        where: { id: parseInt(subscriptionId) },
+    });
+    if (!subscription) {
+        throw new Error('Subscription not found');
+    }
+
+    return await prisma.userSubscription.create({
+        data: {
+            userId: parseInt(userId),
+            subscriptionId: parseInt(subscriptionId),
+            startDate: new Date(),
+            endDate: subscription.duration ? new Date(Date.now() + subscription.duration * 24 * 60 * 60 * 1000) : null,
+        },
+    });
+};
+
+export const updateSubscriptionForUser = async (userSubscriptionId, updates) => {
+    const { startDate, endDate, subscriptionId } = updates;
+
+    // Ensure subscription exists if changing
+    if (subscriptionId) {
+        const subscription = await prisma.subscription.findUnique({
+            where: { id: parseInt(subscriptionId) },
+        });
+        if (!subscription) {
+            throw new Error('Subscription not found');
+        }
+    }
+
+    return await prisma.userSubscription.update({
+        where: { id: parseInt(userSubscriptionId) },
+        data: {
+            ...(startDate && { startDate: new Date(startDate) }),
+            ...(endDate && { endDate: new Date(endDate) }),
+            ...(subscriptionId && { subscriptionId: parseInt(subscriptionId) }),
+        },
+    });
+};
+
+export const deleteSubscriptionForUser = async (userSubscriptionId) => {
+    const userSubscription = await prisma.userSubscription.findUnique({
+        where: { id: parseInt(userSubscriptionId) },
+    });
+    if (!userSubscription) {
+        throw new Error('User subscription not found');
+    }
+
+    return await prisma.userSubscription.delete({
+        where: { id: parseInt(userSubscriptionId) },
+    });
+};

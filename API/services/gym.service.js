@@ -49,7 +49,20 @@ export const deleteById = async (id) => {
     return false;
 };
 
-export const create = async (name, location, itinerary, phoneNumber, openingHour, closingHour, gymUserId) => {
+export const create = async (name, location, itinerary, phoneNumber, openingHour, closingHour, enterpriseId) => {
+    console.log({ enterpriseId }); 
+    if (!enterpriseId) {
+        throw new Error('Enterprise ID is required');
+    }
+
+    const enterprise = await prisma.enterprise.findUnique({
+        where: { id: enterpriseId },
+    });
+
+    if (!enterprise) {
+        throw new Error('Enterprise not found');
+    }
+
     return await prisma.gym.create({
         data: {
             name,
@@ -58,7 +71,7 @@ export const create = async (name, location, itinerary, phoneNumber, openingHour
             phoneNumber,
             openingHour,
             closingHour,
-            gymUserId,
+            enterpriseId,
         },
         select: {
             id: true,
@@ -69,7 +82,9 @@ export const create = async (name, location, itinerary, phoneNumber, openingHour
     });
 };
 
-export const update = async (id, name, location, itinerary, phoneNumber, openingHour, closingHour, creationDate, gymUserId = null) => {
+
+
+export const update = async (id, name, location, itinerary, phoneNumber, openingHour, closingHour, creationDate, enterpriseId = null) => {
     return await prisma.gym.update({
         where: { id: parseInt(id) },
         data: {
@@ -80,7 +95,7 @@ export const update = async (id, name, location, itinerary, phoneNumber, opening
             openingHour: openingHour,
             closingHour: closingHour,
             creationDate: creationDate,
-            gymUserId: gymUserId,
+            enterpriseId: enterpriseId,
         },
         select: {
             id: true,
@@ -91,7 +106,21 @@ export const update = async (id, name, location, itinerary, phoneNumber, opening
             openingHour: true,
             closingHour: true,
             creationDate: true,
-            gymUserId: true,
+            enterpriseId: true,
         },
     });
 };
+
+export const calculateTurnover = async (id) => {
+    const gym = await getById(id);
+    if (!gym) {
+        return null;
+    }
+    const subscriptions = await prisma.subscription.findMany({
+        where: { gymId: gym.id },
+        select: {
+            price: true,
+        },
+    });
+    return subscriptions.reduce((acc, subscription) => acc + subscription.price, 0);
+}

@@ -14,6 +14,8 @@ import BadgeRouter from './API/routers/badge.router.js'
 import StatRouter from './API/routers/stat.router.js'
 import UserBadgeRouter from './API/routers/userBadge.router.js'
 
+import {errorHandler} from './middlewares/errorHandler.js'
+
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 
 const app = express()
@@ -24,8 +26,6 @@ app.use(express.json())
 app.use(OpenApiValidator.middleware({
     apiSpec: __dirname + '/openapi-main.yaml',
     ignoreUndocumented: true,
-    // validateRequests: true,
-    // validateResponses: true
 }))
 
 app.use('/api', UserRouter);
@@ -37,11 +37,6 @@ app.use('/api', BadgeRouter);
 app.use('/api', StatRouter);
 app.use('/api', UserBadgeRouter);
 
-app.use((err, req, res, next) => {
-    res.status(err.status || 500).json({
-        message: err.message,
-        errors: err.errors
-    })
-})
+app.use(errorHandler);
 
 export default app

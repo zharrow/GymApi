@@ -162,15 +162,3 @@ export const login = async (email, password) => {
     
     return jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 }
-
-// export const getQrCode = async (id, qrCode) => {
-//     return await prisma.users.findUnique({
-//         where: {
-//             id,
-//             qrCode,
-//         },
-//         select: {
-//             qrCode: qrCode,
-//         },
-//     });
-// }

@@ -1,97 +1,95 @@
 import prisma from '../../db.js';
-
-export const getAll = async (sortBy, sortDirection) => {
-    const validSortFields = ['id', 'name', 'description', 'creator'];
-    if (sortBy && !validSortFields.includes(sortBy)) {
-        throw new Error('Invalid field to sort by');
-    }
-
-    let options = {
-        select: {
-            id: true,
-            name: true,
-            description: true,
-            creator: true,
-            gyms: {
-                select: {
-                    id: true,
-                    name: true,
-                    location: true,
-                }
-            }
-        },
-    };
-
-    if (sortBy) {
-        options.orderBy = {
-            [sortBy]: sortDirection || 'asc',
-        };
-    }
-
-    return await prisma.enterprise.findMany(options);
+export const getAll = async (sortBy = 'id', sortDirection = 'asc', page = 1, pageSize = 10, filters = {}) => {
+    const skip = (page - 1) * pageSize;
+    return prisma.enterprise.findMany({
+        where: filters,
+        orderBy: { [sortBy]: sortDirection },
+        skip,
+        take: pageSize,
+    });
 };
-
-
-
 
 export const getById = async (id) => {
-    return await prisma.enterprise.findUnique({
-        where: { id: parseInt(id) },
-        select: {
-            id: true,
-            name: true,
-            description: true,
-            creator: true,
-            gym: {
-                select: {
-                    id: true,
-                    name: true,
-                    location: true,
-                }
-            }
-        },
-    });
+    return prisma.enterprise.findUnique({ where: { id } });
 };
 
+export const create = async (name, description, creator) => {
+    return prisma.enterprise.create({ data: { name, description, creator } });
+};
+
+export const update = async (id, name, description, creator) => {
+    return prisma.enterprise.update({ where: { id }, data: { name, description, creator } });
+};
 
 export const deleteById = async (id) => {
-    if (await getById(id)) {
-        await prisma.enterprise.delete({
-            where: { id: parseInt(id) },
-        });
-        return true;
-    }
-    return false;
+    return prisma.enterprise.delete({ where: { id } });
 };
 
-
-
-export const create = async (name, description, creator, gymId = null) => {
-    const enterprise = await prisma.enterprise.create({
-        data: {
-            name: name,
-            description: description,
-            creator: creator,
-            gymId: gymId ? parseInt(gymId) : null,
-        },
-        select: { id: true, name: true },
+export const getEnterpriseStats = async (enterpriseId) => {
+    const gyms = await prisma.gym.findMany({
+        where: { enterpriseId },
+        include: { subscriptions: true },
     });
-    return enterprise;
+
+    const totalGyms = gyms.length;
+    const totalRevenue = gyms.reduce((sum, gym) => sum + gym.subscriptions.reduce((gymSum, sub) => gymSum + sub.price, 0), 0);
+
+    return { totalGyms, totalRevenue };
 };
 
-
-
-export const update = async (id, name, description, creator, gymId = null) => {
-    const enterprise = await prisma.enterprise.update({
-        where: { id: parseInt(id) },
-        data: {
-            name: name,
-            description: description,
-            creator: creator,
-            gymId: gymId ? parseInt(gymId) : null,
-        },
-        select: { id: true, name: true },
+export const getGymsByEnterprise = async (enterpriseId, page = 1, pageSize = 10) => {
+    const skip = (page - 1) * pageSize;
+    return prisma.gym.findMany({
+        where: { enterpriseId },
+        skip,
+        take: pageSize,
+        include: { subscriptions: true },
     });
-    return enterprise;
 };
 
+export const toggleEnterpriseStatus = async (id, isActive) => {
+    return prisma.enterprise.update({ where: { id }, data: { active: isActive } });
+};
+
+export const calculateGlobalStats = async () => {
+    const enterprises = await prisma.enterprise.findMany({
+        include: {
+            gym: {
+                include: {
+                    subscriptions: true,
+                },
+            },
+        },
+    });
+
+    return enterprises.map((enterprise) => ({
+        enterpriseId: enterprise.id,
+        name: enterprise.name,
+        totalGyms: enterprise.gym.length,
+        totalRevenue: enterprise.gym.reduce((sum, gym) => {
+            return sum + gym.subscriptions.reduce((subSum, sub) => subSum + sub.price, 0);
+        }, 0),
+    }));
+};
+
+
+export const calculateEnterpriseTurnover = async (enterpriseId) => {
+    const gyms = await prisma.gym.findMany({
+        where: { enterpriseId },
+        include: { subscriptions: true },
+    });
+
+    return gyms.reduce((sum, gym) => {
+        return sum + gym.subscriptions.reduce((subSum, sub) => subSum + sub.price, 0);
+    }, 0);
+};
+
+export const calculateGymAttendance = async (gymId) => {
+    return prisma.stat.findMany({
+        where: { gymId },
+        select: {
+            entryTime: true,
+            exitTime: true,
+        },
+    });
+};

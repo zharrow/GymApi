@@ -1,75 +1,113 @@
+import { gymSchema, updateGymSchema } from '../validators/gym.validator.js';
 import { getAll, getById, deleteById, create, update } from '../services/gym.service.js';
 
-export const getGyms = async (req, res) => {
-    const data = await getAll(req.query.sortBy, req.query.sortDirection);
-    res.json({
-        success: true,
-        data,
-    });
-};
-
-export const getGymById = async (req, res) => {
-    const gym = await getById(parseInt(req.params.id));
-
-    if (!gym) {
-        return res.status(404).json({
-            success: false,
-            message: 'Gym not found',
-        });
+export const getGyms = async (req, res, next) => {
+    try {
+        const data = await getAll(req.query.sortBy, req.query.sortDirection);
+        res.json({ success: true, data });
+    } catch (error) {
+        next(error);
     }
-
-    return res.json({
-        success: true,
-        data: gym,
-    });
 };
 
-export const deleteGymById = async (req, res) => {
-    const gymId = parseInt(req.params.id);
-
-    const gym = await getById(gymId);
-    if (!gym) {
-        return res.status(404).json({
-            success: false,
-            message: 'Enterprise not found',
-        });
+export const getGymById = async (req, res, next) => {
+    try {
+        const gym = await getById(parseInt(req.params.id));
+        if (!gym) {
+            const error = new Error('Gym not found');
+            error.status = 404;
+            throw error;
+        }
+        res.json({ success: true, data: gym });
+    } catch (error) {
+        next(error);
     }
-    const name = gym.name;
+};
 
-    const hasBeenDeleted = await deleteById(gymId);
-    if (!hasBeenDeleted) {
-        return res.status(500).json({
-            success: false,
-            message: 'Failed to delete the enterprise',
+export const createGym = async (req, res, next) => {
+    try {
+        const { name, location, itinerary, phoneNumber, openingHour, closingHour, enterpriseId } = req.body;
+
+        if (!enterpriseId) {
+            const error = new Error('Enterprise ID is required');
+            error.status = 400;
+            throw error;
+        }
+
+        const gym = await create(name, location, itinerary, phoneNumber, openingHour, closingHour, enterpriseId);
+        res.json({
+            success: true,
+            data: gym,
         });
+    } catch (error) {
+        next(error);
     }
-    return res.json({
-        success: true,
-        message: `Enterprise ${name} deleted`,
-    });
 };
 
-export const createGym = async (req, res) => {
-    const { name, location, itinerary, phoneNumber, openingHour, closingHour, creationDate } = req.body;
+export const updateGym = async (req, res, next) => {
+    try {
+        const { error } = updateGymSchema.validate(req.body);
+        if (error) {
+            error.status = 400;
+            throw error;
+        }
 
-    const enterprise = await create(name, location, itinerary, phoneNumber, openingHour, closingHour, creationDate);
-
-    res.json({
-        success: true,
-        message: `Gym ${name} at ${location} created`,
-        data: enterprise,
-    });
+        const { name, location, itinerary, phoneNumber, openingHour, closingHour, creationDate } = req.body;
+        const { id } = req.params;
+        const gym = await update(id, name, location, itinerary, phoneNumber, openingHour, closingHour, creationDate);
+        res.json({
+            success: true,
+            message: `Gym ${name} updated`,
+            data: gym,
+        });
+    } catch (error) {
+        next(error);
+    }
 };
 
-export const updateGym = async (req, res) => {
-    const { name, location, itinerary, phoneNumber, openingHour, closingHour, creationDate } = req.body;
-    const { id } = req.params;
+export const deleteGymById = async (req, res, next) => {
+    try {
+        const gymId = parseInt(req.params.id);
+        const gym = await getById(gymId);
 
-    const enterprise = await update(id, name, location, itinerary, phoneNumber, openingHour, closingHour, creationDate);
+        if (!gym) {
+            const error = new Error('Gym not found');
+            error.status = 404;
+            throw error;
+        }
 
-    res.json({
-        success: true,
-        message: `Enterprise ${name} updated`,	
-        data: enterprise,
-    });
+        const name = gym.name;
+        const hasBeenDeleted = await deleteById(gymId);
+
+        if (!hasBeenDeleted) {
+            const error = new Error('Failed to delete the gym');
+            error.status = 500;
+            throw error;
+        }
+
+        res.json({
+            success: true,
+            message: `Gym ${name} deleted`,
+        });
+    } catch (error) {
+        next(error);
+    }
 };
+
+export const turnover = async (req, res, next) => {
+    try {
+        const gymId = parseInt(req.params.id);
+        const gym = await getById(gymId);
+
+        if (!gym) {
+            const error = new Error('Gym not found');
+            error.status = 404;
+            throw error;
+        }
+
+        const turnover = await calculateTurnover(gymId);
+        res.json({ success: true, data: turnover });
+    } catch (error) {
+        next(error);
+    }
+}

@@ -1,0 +1,1161 @@
+{
+	"info": {
+		"_postman_id": "5f5fa80e-e480-4c59-bcbc-b32279a92eef",
+		"name": "my-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39189052"
+	},
+	"item": [
+		{
+			"name": "Enterprise",
+			"item": [
+				{
+					"name": "All Enterprises",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/enterprises",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"enterprises"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Enterprise ✅",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Studio Flow\",\r\n    \"description\": \"A leading technology solutions provider.\",\r\n    \"creator\": \"Florent Detres\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/enterprises",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"enterprises"
+							],
+							"query": [
+								{
+									"key": "EnterpriseId",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "Name",
+									"value": "Basic Fit",
+									"disabled": true
+								},
+								{
+									"key": "Description",
+									"value": "Salle de sport orange",
+									"disabled": true
+								},
+								{
+									"key": "Creator",
+									"value": "Test",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Enterprise by Id ✅",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/enterprises/1",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"enterprises",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Enterprise ✅",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"1 - TechCorp\",\r\n    \"description\": \"A leading technology solutions provider.\",\r\n    \"creator\": \"John Doe\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/enterprises/1",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"enterprises",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Enterprise ✅",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/enterprises/3",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"enterprises",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Gym to Enterprise",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/enterprises/add-gym/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"enterprises",
+								"add-gym",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This Folder Get All Methods To Consum Enterprise API Database"
+		},
+		{
+			"name": "Gym",
+			"item": [
+				{
+					"name": "All Gyms ✅",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/gyms",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"gyms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Gym ✅",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Basic Fit Labège\",\r\n  \"location\": \"Labège\",\r\n  \"phoneNumber\": \"+33534567890\",\r\n  \"openingHour\": \"06:00\",\r\n  \"closingHour\": \"22:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/gyms",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"gyms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Gym by Id ✅",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/gyms/2",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"gyms",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Gym",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"closingHour\": \"23:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/gyms/1",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"gyms",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Gym ✅",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/gyms/2",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"gyms",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Manager to Gym",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/gym/add-manager/",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"gym",
+								"add-manager",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This Folder Get All Methods To Consum Gym API Database"
+		},
+		{
+			"name": "Manager",
+			"item": [
+				{
+					"name": "All Managers ✅",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/managers",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"managers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Manager ✅",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"Florent.detres@protonmail.com\",\r\n    \"password\": \"azerty\",\r\n    \"firstname\": \"Florent\",\r\n    \"lastname\": \"Detres\",\r\n    \"gymId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/managers",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"managers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Manager By Id ✅",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/managers/2",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"managers",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Manager",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\": \"Anaël\",\r\n    \"lastname\": \"Lasserre\",\r\n    \"gymId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/managers/2",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"managers",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Manager ✅",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/managers/9",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"managers",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/managers/delete-user/1",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"managers",
+								"delete-user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This Folder Get All Methods To Consum GymManager API Database"
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "All Users ✅",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzMzODY0MjE1LCJleHAiOjE3MzM4Njc4MTV9.g5JJGxy_uMl-sNRiOMzwNKYuiBga8D1Q07MzhCC51L8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/users",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register User ✅",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstname\": \"Florent\",\r\n  \"lastname\": \"Detres\",\r\n  \"email\": \"florent47@protonmail.com\",\r\n  \"password\": \"azerty\",\r\n  \"phone\": \"0784858695\",\r\n  \"qrCode\": \"\",\r\n  \"gymId\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/auth/register",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by Id ✅",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/users/1",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User ✅",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstname\": \"Florent\",\r\n  \"lastname\": \"Detres\",\r\n  \"email\": \"florent.detres@protonmail.com\",\r\n  \"phone\": \"0784858695\",\r\n  \"qrCode\": \"AEZEAZERAZRZE\",\r\n  \"gymId\": 2\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/users/1",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Password ✅",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"password\": \"azerty47\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/users/update-password/1",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"users",
+								"update-password",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User ✅",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/users/1",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User ✅",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"florent47@protonmail.com\",\r\n    \"password\": \"azerty\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/auth/login",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Attribute Subscription",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"subscriptionId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/users/:userId/subscriptions",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"subscriptions"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Subscription",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"subscriptionId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/users/:userId/subscriptions",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"subscriptions"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Subscription",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/users/:userId/subscriptions",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"subscriptions"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Acces to Gym",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/users/1/access/2",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"users",
+								"1",
+								"access",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Methods To Consum User API Database"
+		},
+		{
+			"name": "Subscription",
+			"item": [
+				{
+					"name": "List of subscriptions ✅",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/subscriptions",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"subscriptions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Subscription ✅",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"National\",\r\n  \"description\": \"Access to all Spanish gym\",\r\n  \"price\": 29.99,\r\n  \"gymAccess\": \"ALL\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/subscriptions",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"subscriptions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Subscription",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"World\",\r\n    \"description\": \"Access to all gyms in the World\",\r\n    \"price\": 49.99,\r\n    \"gymAccess\": \"ALL\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/subscriptions/1",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"subscriptions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Details of Subscription",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/subscriptions/1",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"subscriptions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Subscription",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/subscription/1",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"subscription",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stat",
+			"item": [
+				{
+					"name": "List of Stats for all Users ✅",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/stats",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Stat ✅",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": 2,\r\n    \"gymId\": 1,\r\n    \"entryTime\": \"2024-12-10T11:28:00.000Z\",\r\n    \"exitTime\": \"2024-12-10T12:47:00.000Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/stats",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List of Stats for 1 User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/users/2/stats",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"users",
+								"2",
+								"stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Details Stat ✅",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/stats/1",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"stats",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Stat",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/stats/1",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"stats",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Badge",
+			"item": [
+				{
+					"name": "List of Badges ✅",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/badges",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"badges"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Badge ✅",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"10 Entries\",\r\n  \"description\": \"Awarded for entering a gym for the 10th time\",\r\n  \"iconUrl\": \"https://example.com/icons/first-entry.png\",\r\n  \"category\": \"Entry\",\r\n  \"level\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/badges",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"badges"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Details of Badge",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/badges/1",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"badges",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Badge",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Gym Enthusiast\",\r\n  \"description\": \"Awarded for 10 gym entries\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/badges/1",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"badges",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Badge",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/badges/1",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"badges",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UserBadge",
+			"item": [
+				{
+					"name": "Attribute Badge To User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"badgeId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/users/1/badges",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"users",
+								"1",
+								"badges"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List of Badges for 1 User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/users/1/badges",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"users",
+								"1",
+								"badges"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Detail for Badge attributed for 1 User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/users/1/badges/1",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"users",
+								"1",
+								"badges",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Badge attributed at User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/users/1/badges/1",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"users",
+								"1",
+								"badges",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "api",
+			"value": "http://localhost:3000/api/"
+		}
+	]
+}

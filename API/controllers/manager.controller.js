@@ -1,75 +1,92 @@
+import { managerSchema, updateManagerSchema } from '../validators/manager.validator.js';
 import { getAll, getById, deleteById, create, update } from '../services/manager.service.js';
 
-export const getManagers = async (req, res) => {
-    const data = await getAll(req.query.sortBy, req.query.sortDirection);
-    res.json({
-        success: true,
-        data,
-    });
-};
-
-export const getManagersById = async (req, res) => {
-    const manager = await getById(parseInt(req.params.id));
-
-    if (!manager) {
-        return res.status(404).json({
-            success: false,
-            message: 'Manager not found',
-        });
+export const getManagers = async (req, res, next) => {
+    try {
+        const data = await getAll(req.query.sortBy, req.query.sortDirection);
+        res.json({ success: true, data });
+    } catch (error) {
+        next(error);
     }
-
-    return res.json({
-        success: true,
-        data: manager,
-    });
 };
 
-export const deleteManagersById = async (req, res) => {
-    const managerId = parseInt(req.params.id);
-
-    const manager = await getById(managerId);
-    if (!manager) {
-        return res.status(404).json({
-            success: false,
-            message: 'Manager not found',
-        });
+export const getManagersById = async (req, res, next) => {
+    try {
+        const manager = await getById(parseInt(req.params.id));
+        if (!manager) {
+            const error = new Error('Manager not found');
+            error.status = 404;
+            throw error;
+        }
+        res.json({ success: true, data: manager });
+    } catch (error) {
+        next(error);
     }
-    const firstname = manager.firstname;
-    const lastname = manager.lastname;
+};
 
-    const hasBeenDeleted = await deleteById(managerId);
-    if (!hasBeenDeleted) {
-        return res.status(500).json({
-            success: false,
-            message: 'Failed to delete the manager',
+export const createManager = async (req, res, next) => {
+    try {
+        const { error } = managerSchema.validate(req.body);
+        if (error) {
+            error.status = 400;
+            throw error;
+        }
+
+        const { firstname, lastname, email, password, gymId } = req.body;
+        const manager = await create(email, password, firstname, lastname, gymId);
+        res.json({
+            success: true,
+            message: `Manager ${firstname} ${lastname} created`,
+            data: manager,
         });
+    } catch (error) {
+        next(error);
     }
-    return res.json({
-        success: true,
-        message: `Manager ${firstname} ${lastname} deleted`,
-    });
 };
 
-export const createManager = async (req, res) => {
-    const { email, password, firstname, lastname, gymId } = req.body;
+export const updateManager = async (req, res, next) => {
+    try {
+        const { error } = updateManagerSchema.validate(req.body);
+        if (error) {
+            error.status = 400;
+            throw error;
+        }
 
-    const manager = await create(email, password, firstname, lastname, gymId);
-
-    res.json({
-        success: true,
-        message: `Manager ${firstname, ' ', lastname} created`,
-        data: manager,
-    });
+        const { firstname, lastname, gymId } = req.body;
+        const { id } = req.params;
+        const manager = await update(id, firstname, lastname, gymId);
+        res.json({ success: true, data: manager });
+    } catch (error) {
+        next(error);
+    }
 };
 
-export const updateManager = async (req, res) => {
-    const { firstname, lastname, gymId } = req.body;
-    const { id } = req.params;
+export const deleteManagersById = async (req, res, next) => {
+    try {
+        const managerId = parseInt(req.params.id);
+        const manager = await getById(managerId);
 
-    const manager = await update(id, firstname, lastname, gymId);
+        if (!manager) {
+            const error = new Error('Manager not found');
+            error.status = 404;
+            throw error;
+        }
 
-    res.json({
-        success: true,
-        data: manager,
-    });
+        const firstname = manager.firstname;
+        const lastname = manager.lastname;
+        const hasBeenDeleted = await deleteById(managerId);
+
+        if (!hasBeenDeleted) {
+            const error = new Error('Failed to delete the manager');
+            error.status = 500;
+            throw error;
+        }
+
+        res.json({
+            success: true,
+            message: `Manager ${firstname} ${lastname} deleted`,
+        });
+    } catch (error) {
+        next(error);
+    }
 };
