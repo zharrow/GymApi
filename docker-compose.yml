@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  db:
+    
+    image: mysql:latest
+    container_name: gym_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: gymdb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: gympass
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - gym_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+
+  api:
+    build: .
+    container_name: gym_api
+    restart: always
+    environment:
+      DATABASE_URL: mysql://root:rootpass@gym_db:3306/gymdb
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+          condition: service_completed_successfully
+    networks:
+      - gym_network
+
+    command: >
+      bash -c "
+        npx prisma migrate dev --name init
+        nodemon server.js
+      "
+    # node server.js
+
+networks:
+  gym_network:
+    driver: bridge
+
+volumes:
+  db_data:
