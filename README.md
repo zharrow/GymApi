@@ -1,9 +1,3 @@
-# Gym Management API
-
-<<<<<<< Updated upstream
-About this projet
-This is a school projet where we have to develop an API about any thing we want. I choose Gym Management where user can subscribe to one or many gyms, they can found on a map
-=======
 ## About this project
 This is a school project where we have to develop an API about anything we want. I chose Gym Management, where users can subscribe to one or many gyms that they can find on a map.
 
@@ -60,4 +54,3 @@ The API is documented using OpenAPI. You can access the API docs at:
 ```
 http://localhost:3000/api-docs
 ```
->>>>>>> Stashed changes
