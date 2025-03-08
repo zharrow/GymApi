@@ -2,7 +2,6 @@ version: '3.8'
 
 services:
   db:
-    
     image: mysql:latest
     container_name: gym_db
     restart: always
@@ -39,7 +38,7 @@ services:
     command: >
       bash -c "
         npx prisma migrate dev --name init
-        nodemon server.js
+        node server.js
       "
     # node server.js
 

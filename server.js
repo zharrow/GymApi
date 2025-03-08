@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3000
 prisma.$connect().then(async () => {
     console.log('Connected to the database')
 
-    app.listen(PORT, () => {
+    app.listen(PORT, '0.0.0.0', () => {
         console.log('Server is running on port 3000');
     })
 
